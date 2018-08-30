@@ -1,6 +1,6 @@
---- This is Dockerfile for creating chernovroman1984/user2 image (based on nginx:latest base image) ---
+--- This is Dockerfile for creating chernovroman1984/user2 image (based on nginx:latest) ---
 
-# Base image to build from CentOS (Latest)
+# Base image to build from Nginx (Latest)
 FROM nginx:latest
 
 # Author
