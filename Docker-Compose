@@ -1,0 +1,81 @@
+# Define docker-compose version
+version: "3.5"
+
+# Define services
+services:
+   # Nginx
+   nginx1:
+      image: chernovroman1984/user1
+      container_name: nginx1
+      hostname: nginx1
+      volumes:
+         - nginx_data1:/usr/share/nginx/html
+      ports:
+         - "81:80"
+      networks:
+         - nginx_network
+      stop_grace_period: 10s
+      restart: always
+
+   nginx2:
+      image: chernovroman1984/user2
+      container_name: nginx2
+      hostname: nginx2
+      volumes:
+         - nginx_data2:/usr/share/nginx/html
+      ports:
+         - "82:80"
+      networks:
+         - nginx_network
+      stop_grace_period: 10s
+      restart: always
+
+   loadbalancer:
+      image: chernovroman1984/loadbalancer
+      container_name: loadbalancer
+      hostname: loadbalancer
+      volumes:
+         - loadbalancer_conf:/etc/nginx
+         - loadbalancer_data:/usr/share/nginx/html
+      ports:
+         - "80:80"
+      networks:
+         - nginx_network
+      stop_grace_period: 10s
+      restart: always
+
+# Define volumes
+volumes:
+   # Nginx
+   nginx_data1:
+      name: nginx_data1
+      driver_opts:
+         type: none
+         device: /root/docker_projects/mount/user1
+         o: bind
+
+   nginx_data2:
+      name: nginx_data2
+      driver_opts:
+         type: none
+         device: /root/docker_projects/mount/user2
+         o: bind
+
+   loadbalancer_conf:
+      name: loadbalancer_conf
+      driver_opts:
+         type: none
+         device: /root/docker_projects/mount/loadbalancer/conf
+         o: bind
+
+   loadbalancer_data:
+      name: loadbalancer_data
+      driver_opts:
+         type: none
+         device: /root/docker_projects/mount/loadbalancer/data
+         o: bind
+
+# Define networks
+networks:
+   nginx_network:
+      name: nginx_network
