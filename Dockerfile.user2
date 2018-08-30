@@ -1,0 +1,7 @@
+--- This is Dockerfile for creating chernovroman1984/user2 image (based on nginx:latest base image) ---
+
+# Base image to build from CentOS (Latest)
+FROM nginx:latest
+
+# Author
+LABEL maintainer="Chernov Roman <chernov.roman1984@gmail.com>"
